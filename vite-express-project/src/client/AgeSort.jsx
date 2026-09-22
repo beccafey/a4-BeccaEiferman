@@ -4,31 +4,42 @@ import "./SignIn.css";
 
 function AgeSort() {
   const [name, setName] = useState('');
-  const [birthYear, setBirthYear] = useState('');
-  const [userClass, setUserClass] = useState('');
+  const [birth_year, setbirth_year] = useState('');
+  const [user_class, setuser_class] = useState('');
   const [users, setUsers] = useState([]);
 
   const [newName, editName] = useState('');
-  const [newBirthYear, editBirthYear] = useState('');
-  const [newUserClass, editUserClass] = useState('');
+  const [newbirth_year, editbirth_year] = useState('');
+  const [newuser_class, edituser_class] = useState('');
   const [editingUser, setEditingUser] = useState(null);
   
   async function handleSubmit(event, action) {
     event.preventDefault()
     let userInfo = {
     name: name,
-    birthYear: birthYear,
-    userClass: userClass,
+    birth_year: birth_year,
+    user_class: user_class,
     };
 
-    const response = await fetch(action, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(userInfo) 
-    })
-    const data = await response.json();
-    setUsers([...users, data]);
+    const response = await fetch('/submit', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(userInfo)
+  })
+
+  console.log("status:", response.status)
+
+  if (response.ok) {
+    const data = await response.json()
+    console.log("new user:", data)
+
+    setUsers(prevUsers => [...prevUsers, data])
+  } else {
+    console.log("Submit failed")
   }
+}
 
     const ageSortOldest = function() {
         const sortedUsers = [...users].sort(function(user_a, user_b){
@@ -61,8 +72,8 @@ function AgeSort() {
 
     const editUser = function(user) {
         editName(user.newName);
-        editBirthYear(user.newBirthYear);
-        editUserClass(user.newUserClass);
+        editbirth_year(user.newbirth_year);
+        edituser_class(user.newuser_class);
     }
 
     useEffect(() => {
@@ -90,7 +101,7 @@ function AgeSort() {
         <div className="container mt-4">
             <div className="box2 p-4">
                 <h2>My Information</h2>
-            <form id="user_form">
+            <form id="user_form"  onSubmit={handleSubmit}>
             <fieldset>
               <legend>Insert New User Information</legend>
               <div className="mb-3">
@@ -98,14 +109,14 @@ function AgeSort() {
                 <input type="text" id="name" name="name" className="form-control" value={name} onChange={(event) => setName(event.target.value)} required/>
               </div>
               <div className="mb-3">
-                <label htmlFor="birthYear" className="form-label">Birth Year *:</label>
-                <input type="number" id="birthYear" name="birthYear" min="0" max="2026" className="form-control" value={birthYear} onChange={(event) => setBirthYear(event.target.value)} required/>
+                <label htmlFor="birth_year" className="form-label">Birth Year *:</label>
+                <input type="number" id="birth_year" name="birth_year" min="0" max="2026" className="form-control" value={birth_year} onChange={(event) => setbirth_year(event.target.value)} required/>
               </div>
               <div className="mb-3">
-                <label htmlFor="userClass" className="form-label">
+                <label htmlFor="user_class" className="form-label">
                   <span>Class:</span>
                 </label>
-                <select id="userClass" name="userClass" className="form-select" value={userClass} onChange={(event) => setUserClass(event.target.value)}>
+                <select id="user_class" name="user_class" className="form-select" value={user_class} onChange={(event) => setuser_class(event.target.value)}>
                   <option value="Freshman">Freshman</option>
                   <option value="Sophomore">Sophomore</option>
                   <option value="Junior">Junior</option>
@@ -113,7 +124,7 @@ function AgeSort() {
                 </select>
               </div>
               <p className="button">
-                <button type="submit" className="btn btn-primary btn-purple" onClick={(event) => handleSubmit(event, '/submit')}>Submit!</button>
+                <button type="submit" className="btn btn-primary btn-purple" >Submit!</button>
               </p>
             </fieldset>
           </form>
@@ -142,8 +153,8 @@ function AgeSort() {
                     {users.map((user) => (
                         <tr key={user._id}>
                             <td>{user.name}</td>
-                            <td>{user.userClass}</td>
-                            <td>{user.birthYear}</td>
+                            <td>{user.user_class}</td>
+                            <td>{user.birth_year}</td>
                             <td>{user.age}</td>
                             <td>
                                 <button type="submit" className="btn btn-primary btn-purple" onClick={() => deleteUser(user._id)}>Delete</button>
@@ -184,11 +195,11 @@ function AgeSort() {
               <input type="text" id="newName" name="newName" className="form-control" value={newName} onChange={(event) => editName(event.target.value)} required/>
             </div>
             <div className="mb-3">
-              <label htmlFor="birthYear" className="form-label">Birth Year *:</label>
-              <input type="number" id="newBirthYear" name="newBirthYear" min="0" max="2026" className="form-control" value={newBirthYear} onChange={(event) => editBirthYear(event.target.value)} required/>
+              <label htmlFor="birth_year" className="form-label">Birth Year *:</label>
+              <input type="number" id="newbirth_year" name="newbirth_year" min="0" max="2026" className="form-control" value={newbirth_year} onChange={(event) => editbirth_year(event.target.value)} required/>
             </div>
             <div className="mb-3">
-              <label htmlFor="newUserClass" className="form-label" value={newUserClass} onChange={(event) => editUserClass(event.target.value)}>
+              <label htmlFor="newuser_class" className="form-label" value={newuser_class} onChange={(event) => edituser_class(event.target.value)}>
                 <span>Class:</span>
               </label>
               <select id="editClass" name="editClass" className="form-select">

@@ -45,6 +45,7 @@ async function run() {
               username: req.session.user
             }).toArray()
             res.json( docs )
+            
         }
     })
 
@@ -77,13 +78,13 @@ app.post( '/submit', async (req,res) => {
   const newUser = {
     username: req.session.user,
     name: req.body.name,
-    birthYear: Number(req.body.birthYear),
-    userClass: req.body.userClass,
-    age: 2026 - Number(req.body.birthYear)
+    birth_year: Number(req.body.birth_year),
+    user_class: req.body.user_class,
+    age: 2026 - Number(req.body.birth_year)
   }
   const result = await collection.insertOne(newUser);
   newUser._id = result.insertedId;
-  res.json( result )
+  res.json( newUser )
 
 })
 app.post( '/remove', async (req,res) => {
@@ -99,9 +100,9 @@ app.post( '/update', async (req,res) => {
     {
       $set: {
         name: req.body.name,
-        birthYear: Number(req.body.birthYear),
-        userClass: req.body.userClass,
-        age: 2026 - Number(req.body.birthYear)
+        birth_year: Number(req.body.birth_year),
+        user_class: req.body.user_class,
+        age: 2026 - Number(req.body.birth_year)
       }
     }
   )
