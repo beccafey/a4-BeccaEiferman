@@ -62,6 +62,7 @@ async function run() {
             res.json( docs )
         }
     })
+    ViteExpress.listen(app, 3000);
 }
 
 run()
@@ -181,7 +182,3 @@ app.use( function( req,res,next) {
     res.sendFile( __dirname + '/public/index.html' )
 })
 
-
-ViteExpress.listen(app, 3000, () =>
-  console.log("Server is listening on port 3000..."),
-);
