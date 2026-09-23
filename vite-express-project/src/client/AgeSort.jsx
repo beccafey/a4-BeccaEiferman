@@ -2,7 +2,7 @@ import { useState, useEffect} from "react";
 import 'bootstrap/dist/css/bootstrap.min.css'
 import "./SignIn.css";
 
-function AgeSort() {
+function AgeSort({allDataRedirect, onSignOut}) {
   const [name, setName] = useState('');
   const [birth_year, setbirth_year] = useState('');
   const [user_class, setuser_class] = useState('');
@@ -86,6 +86,13 @@ function AgeSort() {
         setEditingUser(null);
     }   
 
+  async function handleAllDataRedirect() {
+      allDataRedirect();
+    }
+
+  async function handleSignOut() {
+     onSignOut();
+    }
   return (
     <>
     <div className="container text-center mt-4">
@@ -177,9 +184,20 @@ function AgeSort() {
 
     <div className="container text-center mt-4">
       <div className="box p-4">
-        <form method="POST">
+        <form>
             <div className="d-flex justify-content-center align-items-center gap-3">
-                <button type="submit" id="allDataRedirect" className="btn btn-purple">All User Data</button>
+                <button type="button" id="allDataRedirect" className="btn btn-purple" onClick={handleAllDataRedirect}>All User Data</button>
+            </div>
+        </form>
+      </div>
+    </div>
+
+
+    <div className="container text-center mt-4">
+      <div className="box p-4">
+        <form>
+            <div className="d-flex justify-content-center align-items-center gap-3">
+                <button type="button" id="sign_out_button" className="btn btn-purple" onClick={handleSignOut}>Sign Out</button>
             </div>
         </form>
       </div>

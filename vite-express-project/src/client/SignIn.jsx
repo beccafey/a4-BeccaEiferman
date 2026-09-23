@@ -3,7 +3,7 @@ import reactLogo from "./assets/react.svg";
 import 'bootstrap/dist/css/bootstrap.min.css'
 import "./SignIn.css";
 
-function SignIn({ onSignIn }) {
+function SignIn({ onSignIn, onSignInFailed }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -17,7 +17,7 @@ function SignIn({ onSignIn }) {
     if (response.ok) { 
         onSignIn();
     } else { 
-        alert('Sign In Failed.') ;
+        onSignInFailed();
     } 
   }
 
