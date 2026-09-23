@@ -127,6 +127,7 @@ app.post( '/createAcct', async (req,res)=> {
   // for A3, you should check username / password combos in your database
   if(user){
     console.log( "User Already Exists" );
+    res.sendStatus(401);
   }
 
 
@@ -137,6 +138,7 @@ app.post( '/createAcct', async (req,res)=> {
   console.log( "Account Created" )
   req.session.login = true;
   req.session.user = req.body.username
+  res.sendStatus(200);
 })
 
 //sign in stuff

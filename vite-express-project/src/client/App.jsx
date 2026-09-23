@@ -12,7 +12,8 @@ function App() {
 
   if (currentPage === "SignIn") {
     return <SignIn onSignIn={() => setPage("AgeSort")}
-                   onSignInFailed={() => setPage("SignInFailed")}/>
+                   onSignInFailed={() => setPage("SignInFailed")}
+                    onCreateAccount={() => setPage("AgeSort")}/>
   }
   if (currentPage === "SignInFailed") {
     return <SignInFailed returnSignIn={() => setPage("SignIn")}/>

@@ -8,9 +8,9 @@ function AgeSort({allDataRedirect, onSignOut}) {
   const [user_class, setuser_class] = useState('');
   const [users, setUsers] = useState([]);
 
-  const [newName, editName] = useState('');
-  const [newbirth_year, editbirth_year] = useState('');
-  const [newuser_class, edituser_class] = useState('');
+  const [editName, setEditName] = useState('');
+  const [editbirth_year,setEditbirth_year] = useState('');
+  const [edituser_class, setEdituser_class] = useState('');
   const [editingUser, setEditingUser] = useState(null);
   
   async function handleSubmit(event, action) {
@@ -71,10 +71,47 @@ function AgeSort({allDataRedirect, onSignOut}) {
     }
 
     const editUser = function(user) {
-        editName(user.newName);
-        editbirth_year(user.newbirth_year);
-        edituser_class(user.newuser_class);
+        setEditingUser(user);
+        setEditName(user.name);
+        setEditbirth_year(user.birth_year);
+        setEdituser_class(user.ser_class);
     }
+
+    const handleUpdate = async (event) => {
+      event.preventDefault();
+      const response = await fetch('/update', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          _id: editingUser._id,
+          name: editName,
+          birth_year: editbirth_year,
+          user_class: edituser_class
+        })
+      });
+
+      if (response.ok) {
+        const updatedUser = {
+          ...editingUser,
+          name: editName,
+          birth_year: Number(editbirth_year),
+          user_class: edituser_class,
+          age: 2026 - Number(editbirth_year)
+        };
+
+        setUsers(prevUsers =>
+          prevUsers.map(user =>
+            user._id === editingUser._id ? updatedUser : user
+          )
+        );
+
+        setEditingUser(null);
+      } else {
+        console.log("Update failed:", response.status);
+      }
+    };
 
     useEffect(() => {
     fetch('/docs')
@@ -204,20 +241,21 @@ function AgeSort({allDataRedirect, onSignOut}) {
     </div>
 
 
-    <div className="form-popup box2 p-4" id="editFormDiv">
-        <form id="editForm" className="form-container">
+    {editingUser && (
+      <div className="box2 p-4" id="editFormDiv">
+        <form id="editForm" className="form-container" onSubmit={handleUpdate}>
           <fieldset>
             <legend>Insert New Information</legend>
             <div className="mb-3">
               <label htmlFor="name" className="form-label">Name *:</label>
-              <input type="text" id="newName" name="newName" className="form-control" value={newName} onChange={(event) => editName(event.target.value)} required/>
+              <input type="text" id="newName" name="newName" className="form-control" value={editName} onChange={(event) => setEditName(event.target.value)} required/>
             </div>
             <div className="mb-3">
               <label htmlFor="birth_year" className="form-label">Birth Year *:</label>
-              <input type="number" id="newbirth_year" name="newbirth_year" min="0" max="2026" className="form-control" value={newbirth_year} onChange={(event) => editbirth_year(event.target.value)} required/>
+              <input type="number" id="newbirth_year" name="newbirth_year" min="0" max="2026" className="form-control" value={editbirth_year} onChange={(event) => setEditbirth_year(event.target.value)} required/>
             </div>
             <div className="mb-3">
-              <label htmlFor="newuser_class" className="form-label" value={newuser_class} onChange={(event) => edituser_class(event.target.value)}>
+              <label htmlFor="newuser_class" className="form-label" value={edituser_class} onChange={(event) => setEdituser_class(event.target.value)}>
                 <span>Class:</span>
               </label>
               <select id="editClass" name="editClass" className="form-select">
@@ -234,6 +272,8 @@ function AgeSort({allDataRedirect, onSignOut}) {
           </fieldset>
         </form>
     </div>
+    )}
+    
 
 
     </>

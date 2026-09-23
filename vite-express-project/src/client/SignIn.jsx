@@ -3,7 +3,7 @@ import reactLogo from "./assets/react.svg";
 import 'bootstrap/dist/css/bootstrap.min.css'
 import "./SignIn.css";
 
-function SignIn({ onSignIn, onSignInFailed }) {
+function SignIn({ onSignIn, onSignInFailed, onCreateAccount }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
