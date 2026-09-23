@@ -50,7 +50,7 @@ function AllData({userDataRedirect, onSignOut}) {
       <div className="box p-4">
         <form>
             <div className="d-flex justify-content-center align-items-center gap-3">
-                <button type="button" id="userdata_redirect" class="btn btn-purple" onClick={handleUserDataRedirect}>Back to User Data</button>
+                <button type="button" id="userdata_redirect" className="btn btn-purple" onClick={handleUserDataRedirect}>Back to User Data</button>
             </div>
         </form>
       </div>
@@ -74,7 +74,7 @@ function AllData({userDataRedirect, onSignOut}) {
                   <tbody id="age_table_body">
                     {users.map((user) => (
                         <tr key={user._id}>
-                            <td>{user.usename}</td>
+                            <td>{user.username}</td>
                             <td>{user.name}</td>
                             <td>{user.user_class}</td>
                             <td>{user.birth_year}</td>

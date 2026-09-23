@@ -126,8 +126,7 @@ app.post( '/createAcct', async (req,res)=> {
   // below is *just a simple authentication example* 
   // for A3, you should check username / password combos in your database
   if(user){
-    console.log( "User Already Exists" )
-    res.redirect('noacct.html');
+    console.log( "User Already Exists" );
   }
 
 
@@ -138,7 +137,6 @@ app.post( '/createAcct', async (req,res)=> {
   console.log( "Account Created" )
   req.session.login = true;
   req.session.user = req.body.username
-  res.redirect('/page2.html')
 })
 
 //sign in stuff

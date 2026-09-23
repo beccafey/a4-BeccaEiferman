@@ -76,24 +76,12 @@ function AgeSort({allDataRedirect, onSignOut}) {
         edituser_class(user.newuser_class);
     }
 
-    /*useEffect(() => {
+    useEffect(() => {
     fetch('/docs')
         .then(response => response.json())
         .then(data => setUsers(data))
     }, [])
-    */
-   useEffect(() => {
-  fetch('/docs')
-    .then(response => {
-      console.log("docs status:", response.status)
-      return response.json()
-    })
-    .then(data => {
-      console.log("docs data:", data)
-      setUsers(data)
-    })
-    }, [])
-
+    
     const closeForm = () => {
         setEditingUser(null);
     }   
