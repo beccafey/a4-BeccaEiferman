@@ -62,9 +62,10 @@ async function run() {
             res.json( docs )
         }
     })
-    ViteExpress.listen(app, 3000);
+  
 }
 
+ViteExpress.listen(app, 3000);
 run()
 
 app.use( (req,res,next) => {
