@@ -32,7 +32,7 @@ const client = new MongoClient( uri )
 let collection = null
 let signin_collection = null
 
-async function run() {
+
     await client.connect()
 
     collection = await client.db("A3Database").collection("A3Collection")
@@ -62,11 +62,8 @@ async function run() {
             res.json( docs )
         }
     })
-  
-}
 
-ViteExpress.listen(app, 3000);
-run()
+
 
 app.use( (req,res,next) => {
   if( collection !== null ) {
@@ -142,6 +139,8 @@ app.post( '/createAcct', async (req,res)=> {
   res.sendStatus(200);
 })
 
+
+
 //sign in stuff
 app.post( '/login', async (req,res)=> {
   // express.urlencoded will put your key value pairs 
@@ -175,11 +174,15 @@ app.post( '/login', async (req,res)=> {
   }
 })
 
-// add some middleware that always sends unauthenicaetd users to the login page
+/* add some middleware that always sends unauthenicaetd users to the login page
 app.use( function( req,res,next) {
   if( req.session.login === true )
     next()
   else
     res.sendFile( __dirname + '/index.html' )
 })
+  */
+
+ViteExpress.listen(app, 3000);
+
 
