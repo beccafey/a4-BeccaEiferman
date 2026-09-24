@@ -74,7 +74,7 @@ function AgeSort({allDataRedirect, onSignOut}) {
         setEditingUser(user);
         setEditName(user.name);
         setEditbirth_year(user.birth_year);
-        setEdituser_class(user.ser_class);
+        setEdituser_class(user.user_class);
     }
 
     const handleUpdate = async (event) => {
@@ -158,13 +158,16 @@ function AgeSort({allDataRedirect, onSignOut}) {
               </div>
               <div className="mb-3">
                 <label htmlFor="user_class" className="form-label">
-                  <span>Class:</span>
+                  <span>Class *:</span>
                 </label>
-                <select id="user_class" name="user_class" className="form-select" value={user_class} onChange={(event) => setuser_class(event.target.value)}>
+                <select id="user_class" name="user_class" className="form-select" value={user_class} onChange={(event) => setuser_class(event.target.value)} required>
+                  <option value="" disabled>Select a Class</option>
                   <option value="Freshman">Freshman</option>
                   <option value="Sophomore">Sophomore</option>
                   <option value="Junior">Junior</option>
                   <option value="Senior">Senior</option>
+                  <option value="Grad Student">Grad Student</option>
+                  <option value="Not in School">Not in School</option>
                 </select>
               </div>
               <p className="button">
@@ -255,14 +258,16 @@ function AgeSort({allDataRedirect, onSignOut}) {
               <input type="number" id="newbirth_year" name="newbirth_year" min="0" max="2026" className="form-control" value={editbirth_year} onChange={(event) => setEditbirth_year(event.target.value)} required/>
             </div>
             <div className="mb-3">
-              <label htmlFor="newuser_class" className="form-label" value={edituser_class} onChange={(event) => setEdituser_class(event.target.value)}>
-                <span>Class:</span>
+              <label htmlFor="newuser_class" className="form-label">
+                <span>Class* :</span>
               </label>
-              <select id="editClass" name="editClass" className="form-select">
+              <select id="editClass" name="editClass" className="form-select" value={edituser_class} onChange={(event) => setEdituser_class(event.target.value)}>
                 <option value="Freshman">Freshman</option>
                 <option value="Sophomore">Sophomore</option>
                 <option value="Junior">Junior</option>
                 <option value="Senior">Senior</option>
+                <option value="Grad Student">Grad Student</option>
+                <option value="Not in School">Not in School</option>
               </select>
             </div>
             <p className="button">
