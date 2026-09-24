@@ -179,6 +179,6 @@ app.use( function( req,res,next) {
   if( req.session.login === true )
     next()
   else
-    res.sendFile( __dirname + '/public/index.html' )
+    res.sendFile( __dirname + '/index.html' )
 })
 
